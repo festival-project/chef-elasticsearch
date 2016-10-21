@@ -1,4 +1,4 @@
-# elasticsearch
+# festival-elasticsearch
 
-TODO: Enter the cookbook description here.
+a chef cookbook for Elasticsearch in FESTIVAL platform
 
