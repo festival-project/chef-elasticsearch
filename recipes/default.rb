@@ -36,8 +36,7 @@ template '/etc/elasticsearch/elasticsearch.yml' do
   mode '0755'
   variables({
     :path_data => node.combined_default['festival-elasticsearch']['path.data'],
-    :network_host => node.combined_default['festival-elasticsearch']['network.host'],
-    :es_heap_size => node.combined_default['festival-elasticsearch']['ES_HEAP_SIZE']
+    :network_host => node.combined_default['festival-elasticsearch']['network.host']
   })
 end
 
@@ -53,6 +52,9 @@ template '/etc/default/elasticsearch' do
   owner 'root'
   group 'root'
   mode '0755'
+  variables({
+    :es_heap_size => node.combined_default['festival-elasticsearch']['ES_HEAP_SIZE']
+  })
 end
 
 systemd_unit 'elasticsearch.service' do

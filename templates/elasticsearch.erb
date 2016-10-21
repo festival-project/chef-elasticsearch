@@ -21,7 +21,7 @@
 # Set ES_HEAP_SIZE to 50% of available RAM, but no more than 31g
 #ES_HEAP_SIZE=2g
 <% if @es_heap_size %>
-  <%= "ES_HEAP_SIZE=#{@es_heap_size}" %>
+<%= "ES_HEAP_SIZE=#{@es_heap_size}" %>
 <% end %>
 
 # Heap new generation
