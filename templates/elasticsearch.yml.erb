@@ -31,8 +31,8 @@
 # Path to directory where to store the data (separate multiple locations by comma):
 #
 # path.data: /path/to/data
-<% if attribute?('path.data') %>
-  <%= "path.data: #{node.combined_default['festival-elasticsearch']['path.data']}" %>
+<% if @path_data %>
+  <%= "path.data: #{@path_data}" %>
 <% end %>
 #
 # Path to log files:
@@ -55,8 +55,8 @@
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
 # network.host: 192.168.0.1
-<% if attribute?('network.host') %>
-  <%= "network.host: #{node.combined_default['festival-elasticsearch']['network.host']}" %>
+<% if @network_host %>
+  <%= "network.host: #{@network_host}" %>
 <% end %>
 #
 # Set a custom port for HTTP:

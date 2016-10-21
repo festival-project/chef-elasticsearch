@@ -1,12 +1,19 @@
 #
-# Cookbook Name:: elasticsearch
+# Cookbook Name:: festival-elasticsearch
 # Recipe:: default
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
 execute 'add elastic GPG key' do
   command 'wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -'
-  command 'echo "deb https://packages.elastic.co/elasticsearch/2.x/debian stable main" | tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list'
+end
+
+cookbook_file '/etc/apt/sources.list.d/elasticsearch-2.x.list' do
+  source 'elasticsearch-2.x.list'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
 end
 
 apt_update 'Update the apt cache' do
@@ -18,12 +25,8 @@ apt_package 'openjdk-8-jdk' do
 end
 
 apt_package 'elasticsearch' do
+  options '--allow-unauthenticated'
   action :install
-end
-
-execute 'auto start setting' do
-  command '/bin/systemctl daemon-reload'
-  command '/bin/systemctl enable elasticsearch.service'
 end
 
 template '/etc/elasticsearch/elasticsearch.yml' do
@@ -31,6 +34,18 @@ template '/etc/elasticsearch/elasticsearch.yml' do
   owner 'root'
   group 'root'
   mode '0755'
+  variables({
+    :path_data => node.combined_default['festival-elasticsearch']['path.data'],
+    :network_host => node.combined_default['festival-elasticsearch']['network.host'],
+    :es_heap_size => node.combined_default['festival-elasticsearch']['ES_HEAP_SIZE']
+  })
+end
+
+directory node.combined_default['festival-elasticsearch']['path.data'] do
+  owner 'elasticsearch'
+  group 'elasticsearch'
+  mode '0755'
+  action :create
 end
 
 template '/etc/default/elasticsearch' do
@@ -40,6 +55,6 @@ template '/etc/default/elasticsearch' do
   mode '0755'
 end
 
-execute 'start elasticsearch' do
-  command '/bin/systemctl start elasticsearch.service'
+systemd_unit 'elasticsearch.service' do
+  action [:enable, :start]
 end

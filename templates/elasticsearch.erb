@@ -20,8 +20,8 @@
 # Heap size defaults to 256m min, 1g max
 # Set ES_HEAP_SIZE to 50% of available RAM, but no more than 31g
 #ES_HEAP_SIZE=2g
-<% if attribute?('ES_HEAP_SIZE') %>
-  <%= "ES_HEAP_SIZE=#{node.combined_default['festival-elasticsearch']['ES_HEAP_SIZE']}" %>
+<% if @es_heap_size %>
+  <%= "ES_HEAP_SIZE=#{@es_heap_size}" %>
 <% end %>
 
 # Heap new generation
