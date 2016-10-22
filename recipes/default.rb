@@ -12,7 +12,7 @@ cookbook_file '/etc/apt/sources.list.d/elasticsearch-2.x.list' do
   source 'elasticsearch-2.x.list'
   owner 'root'
   group 'root'
-  mode '0755'
+  mode '0664'
   action :create
 end
 
@@ -33,7 +33,7 @@ template '/etc/elasticsearch/elasticsearch.yml' do
   source 'elasticsearch.yml.erb'
   owner 'root'
   group 'root'
-  mode '0755'
+  mode '0664'
   variables({
     :path_data => node.combined_default['festival-elasticsearch']['path.data'],
     :network_host => node.combined_default['festival-elasticsearch']['network.host']
@@ -51,7 +51,7 @@ template '/etc/default/elasticsearch' do
   source 'elasticsearch.erb'
   owner 'root'
   group 'root'
-  mode '0755'
+  mode '0664'
   variables({
     :es_heap_size => node.combined_default['festival-elasticsearch']['ES_HEAP_SIZE']
   })
