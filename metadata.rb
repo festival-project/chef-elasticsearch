@@ -1,6 +1,6 @@
 name 'festival-elasticsearch'
 maintainer 'Toyokazu Akiyama'
-maintainer_email 'toyokazu@gmail.com'
+maintainer_email 'you@example.com'
 license 'MIT'
 description 'Installs/Configures elasticsearch'
 long_description 'Installs/Configures elasticsearch'
